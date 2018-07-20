@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="1.90.2">
+  <Settings>
+    <Param name="expName" updates="None" val="OD" valType="str"/>
+    <Param name="Show info dlg" updates="None" val="False" valType="bool"/>
+    <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
+    <Param name="Experiment info" updates="None" val="{'participant': '', 'session': '001'}" valType="code"/>
+    <Param name="Use version" updates="None" val="latest" valType="str"/>
+    <Param name="Full-screen window" updates="None" val="True" valType="bool"/>
+    <Param name="Window size (pixels)" updates="None" val="[1920, 1080]" valType="code"/>
+    <Param name="Screen" updates="None" val="1" valType="num"/>
+    <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
+    <Param name="color" updates="None" val="$[0,0,0]" valType="str"/>
+    <Param name="colorSpace" updates="None" val="dkl" valType="str"/>
+    <Param name="Units" updates="None" val="deg" valType="str"/>
+    <Param name="blendMode" updates="None" val="avg" valType="str"/>
+    <Param name="Show mouse" updates="None" val="False" valType="bool"/>
+    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
+    <Param name="Save log file" updates="None" val="False" valType="bool"/>
+    <Param name="Save wide csv file" updates="None" val="False" valType="bool"/>
+    <Param name="Save csv file" updates="None" val="False" valType="bool"/>
+    <Param name="Save excel file" updates="None" val="False" valType="bool"/>
+    <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
+    <Param name="logging level" updates="None" val="exp" valType="code"/>
+    <Param name="OSF Project ID" updates="None" val="" valType="str"/>
+    <Param name="HTML path" updates="None" val="html" valType="str"/>
+    <Param name="JS libs" updates="None" val="packaged" valType="str"/>
+  </Settings>
+  <Routines>
+    <Routine name="trial">
+      <CodeComponent name="code">
+        <Param name="name" updates="None" val="code" valType="code"/>
+        <Param name="Begin Experiment" updates="constant" val="&amp;#10;from tkinter import filedialog&amp;#10;from tkinter import *&amp;#10;from psychopy import core, event&amp;#10;import numpy&amp;#10;import random, sys, os&amp;#10;import shutil&amp;#10;import win32api&amp;#10;root= Tk()&amp;#10;num_conditions=9 ##This is to create the folders for each conditions&amp;#10;conditions_list=numpy.ones(8,dtype=int) ##Array that keeps track of how many times each condition was replicated&amp;#10;trial_number=0;&amp;#10;Phase=0          ##Initialize the phase of the moving grating&amp;#10;&amp;#10;win.winHandle.set_visible(False)   ##Set the grating to be invisible so that the save folder directory is visible&amp;#10;&amp;#10;win.mouseVisible = True&amp;#10;root.directory=filedialog.askdirectory()  ##Gui for the save folder&amp;#10;&amp;#10;win.winHandle.set_visible(True)           ##Make the grating visible again&amp;#10;&amp;#10;&amp;#10;&amp;#10;&amp;#10;for i in range(num_conditions):              ##Make the directories for each condition in the root directory&amp;#10; os.mkdir(root.directory+'/condition'+str(i))&amp;#10;&amp;#10;&amp;#10;root.config(cursor='none')&amp;#10;root.update_idletasks()" valType="extendedCode"/>
+        <Param name="Begin Routine" updates="constant" val="&amp;#10;&amp;#10;&amp;#10;os.system(&quot;C:/Users/Nick/Desktop/pythonscripts/CameraDataDirectory/camfile.bat&quot;) ##Emulate camera file generation with a batch file&amp;#10;&amp;#10;os.mkdir(root.directory+'/condition'+str(Condition_number)+'/trial'+str(conditions_list[Condition_number-1])) ##Create a subfolder for the current condition replication number&amp;#10;win.winHandle.activate()&amp;#10;win.mouseVisible = False&amp;#10;directionchoice=random.uniform(0,1)   ##Pick a direction for the grating motion&amp;#10;if(directionchoice&gt;0.5):&amp;#10; direction=1&amp;#10;elif(directionchoice&lt;0.5):&amp;#10; direction=-1&amp;#10;&amp;#10;&amp;#10;&amp;#10;&amp;#10;&amp;#10;&amp;#10;" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="win.setMouseVisible(False)&amp;#10;win32api.SetCursorPos((1,1))&amp;#10;Phase=Phase+1/60   ##move the grating at 1 cps&amp;#10;if Phase&gt;1:&amp;#10; Phase=0&amp;#10;" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="&amp;#10;&amp;#10;shutil.move(&quot;C:/Users/Nick/Desktop/pythonscripts/CameraDataDirectory/test_data.txt&quot;,root.directory+&quot;/condition&quot;+str(Condition_number)+&quot;/trial&quot;+str(conditions_list[Condition_number-1])+&quot;/&quot;+&quot;test_data.txt&quot;) ##move files from the camera to the root directory&amp;#10;&amp;#10;conditions_list[(Condition_number-1)]+=1&amp;#10;&amp;#10;" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+      </CodeComponent>
+      <GratingComponent name="grating">
+        <Param name="name" updates="None" val="grating" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="8" valType="code"/>
+        <Param name="stopVal" updates="constant" val="4.0" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="color" updates="set every repeat" val="$Color" valType="str"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="dkl" valType="str"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="size" updates="constant" val="(40, 28)" valType="code"/>
+        <Param name="ori" updates="set every repeat" val="$Orientation" valType="code"/>
+        <Param name="tex" updates="constant" val="sqr" valType="str"/>
+        <Param name="mask" updates="constant" val="none" valType="str"/>
+        <Param name="sf" updates="constant" val="1" valType="code"/>
+        <Param name="phase" updates="set every frame" val="$Phase*direction" valType="code"/>
+        <Param name="texture resolution" updates="constant" val="512" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="blendmode" updates="constant" val="avg" valType="str"/>
+      </GratingComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="nReps" updates="None" val="20" valType="code"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([('Orientation', 45), ('Color', [-1, -1, -1]), ('Shutter', 'L')]), OrderedDict([('Orientation', 135), ('Color', [-1, -1, -1]), ('Shutter', 'R')]), OrderedDict([('Orientation', 45), ('Color', [-1, -1, -1]), ('Shutter', 'L')]), OrderedDict([('Orientation', 135), ('Color', [-1, -1, -1]), ('Shutter', 'R')])]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="OD.xlsx" valType="str"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+  </Flow>
+</PsychoPy2experiment>
